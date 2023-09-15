@@ -126,7 +126,7 @@ final class NamespaceRegistry
         return $this->regexes;
     }
 
-    private static function extractNameNamespace(string $name): string
+    public static function extractNameNamespace(string $name): string
     {
         $nameParts = explode('\\', $name);
 

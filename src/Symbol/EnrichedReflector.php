@@ -41,7 +41,8 @@ final class EnrichedReflector
     {
         return $this->symbolsConfiguration
             ->getExcludedNamespaces()
-            ->belongsToRegisteredNamespace($name);
+            ->belongsToRegisteredNamespace($name)
+            || ($this->hasIncludedNamespacesDefined() && !$this->belongsToIncludedNamespace($name));
     }
 
     private function belongsToExposedNamespace(string $name): bool
@@ -141,7 +142,8 @@ final class EnrichedReflector
     {
         return $this->symbolsConfiguration
             ->getExcludedNamespaces()
-            ->isRegisteredNamespace($name);
+            ->isRegisteredNamespace($name)
+            || ($this->hasIncludedNamespacesDefined() && !$this->isIncludedNamespace($name));
     }
 
     private function isExposedFunctionFromGlobalNamespaceWithoutExclusionCheck(string $functionName): bool
@@ -162,5 +164,36 @@ final class EnrichedReflector
             ltrim($symbolName, '\\'),
             '\\',
         );
+    }
+
+    private function belongsToIncludedNamespace(string $name): bool
+    {
+        if (NamespaceRegistry::extractNameNamespace($name) === '') {
+            return true;
+        }
+
+        return $this
+            ->symbolsConfiguration
+            ->getIncludedNamespaces()
+            ->belongsToRegisteredNamespace($name);
+    }
+
+    private function isIncludedNamespace(string $name): bool
+    {
+        if (NamespaceRegistry::extractNameNamespace($name) === '') {
+            return true;
+        }
+
+        return $this
+            ->symbolsConfiguration
+            ->getIncludedNamespaces()
+            ->isRegisteredNamespace($name);
+    }
+
+    private function hasIncludedNamespacesDefined(): bool
+    {
+        return $this
+                ->symbolsConfiguration
+                ->getIncludedNamespaces() !== null;
     }
 }

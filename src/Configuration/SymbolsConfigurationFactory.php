@@ -102,6 +102,14 @@ final class SymbolsConfigurationFactory
             ),
         );
 
+        [
+            $includedNamespaceNames,
+            $includedNamespaceRegexes,
+        ] = $this->retrieveElements(
+            $config,
+            ConfigurationKeys::INCLUDE_NAMESPACES_KEYWORD,
+        );
+
         return SymbolsConfiguration::create(
             $exposeGlobalConstants,
             $exposeGlobalClasses,
@@ -129,6 +137,12 @@ final class SymbolsConfigurationFactory
             $excludedClasses,
             $excludedFunctions,
             $excludedConstants,
+            empty($includedNamespaceNames) && empty($includedNamespaceRegexes)
+                ? null
+                : NamespaceRegistry::create(
+                    $includedNamespaceNames,
+                    $includedNamespaceRegexes,
+                ),
         );
     }
 

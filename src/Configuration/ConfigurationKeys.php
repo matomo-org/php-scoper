@@ -39,6 +39,7 @@ final class ConfigurationKeys
     public const CLASSES_INTERNAL_SYMBOLS_KEYWORD = 'exclude-classes';
     public const FUNCTIONS_INTERNAL_SYMBOLS_KEYWORD = 'exclude-functions';
     public const CONSTANTS_INTERNAL_SYMBOLS_KEYWORD = 'exclude-constants';
+    public const INCLUDE_NAMESPACES_KEYWORD = 'include-namespaces';
 
     public const KEYWORDS = [
         self::PREFIX_KEYWORD,
@@ -57,5 +58,6 @@ final class ConfigurationKeys
         self::CLASSES_INTERNAL_SYMBOLS_KEYWORD,
         self::FUNCTIONS_INTERNAL_SYMBOLS_KEYWORD,
         self::CONSTANTS_INTERNAL_SYMBOLS_KEYWORD,
+        self::INCLUDE_NAMESPACES_KEYWORD,
     ];
 }

@@ -37,6 +37,7 @@ final class SymbolsConfiguration
         ?SymbolRegistry $excludedClasses = null,
         ?SymbolRegistry $excludedFunctions = null,
         ?SymbolRegistry $excludedConstants = null,
+        ?NamespaceRegistry $includedNamespaces = null,
     ): self {
         return new self(
             $exposeGlobalConstants,
@@ -50,6 +51,7 @@ final class SymbolsConfiguration
             $excludedClasses ?? SymbolRegistry::create(),
             $excludedFunctions ?? SymbolRegistry::create(),
             $excludedConstants ?? SymbolRegistry::createForConstants(),
+            $includedNamespaces,
         );
     }
 
@@ -65,6 +67,7 @@ final class SymbolsConfiguration
         private SymbolRegistry $excludedClasses,
         private SymbolRegistry $excludedFunctions,
         private SymbolRegistry $excludedConstants,
+        private ?NamespaceRegistry $includedNamespaces,
     ) {
     }
 
@@ -121,5 +124,10 @@ final class SymbolsConfiguration
     public function getExcludedConstants(): SymbolRegistry
     {
         return $this->excludedConstants;
+    }
+
+    public function getIncludedNamespaces(): ?NamespaceRegistry
+    {
+        return $this->includedNamespaces;
     }
 }
