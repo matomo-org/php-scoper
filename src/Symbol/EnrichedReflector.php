@@ -180,7 +180,7 @@ final class EnrichedReflector
 
     private function isIncludedNamespace(string $name): bool
     {
-        if (NamespaceRegistry::extractNameNamespace($name) === '') {
+        if ($name === '') {
             return true;
         }
 
@@ -195,5 +195,12 @@ final class EnrichedReflector
         return $this
                 ->symbolsConfiguration
                 ->getIncludedNamespaces() !== null;
+    }
+
+    public function forceNoGlobalAlias(): bool
+    {
+        return $this
+            ->symbolsConfiguration
+            ->forceNoGlobalAlias();
     }
 }
