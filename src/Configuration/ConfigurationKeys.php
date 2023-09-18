@@ -41,6 +41,8 @@ final class ConfigurationKeys
     public const CONSTANTS_INTERNAL_SYMBOLS_KEYWORD = 'exclude-constants';
     public const INCLUDE_NAMESPACES_KEYWORD = 'include-namespaces';
 
+    public const FORCE_NO_GLOBAL_ALIAS_KEY = 'force-no-global-alias';
+
     public const KEYWORDS = [
         self::PREFIX_KEYWORD,
         self::OUTPUT_DIR_KEYWORD,
@@ -59,5 +61,6 @@ final class ConfigurationKeys
         self::FUNCTIONS_INTERNAL_SYMBOLS_KEYWORD,
         self::CONSTANTS_INTERNAL_SYMBOLS_KEYWORD,
         self::INCLUDE_NAMESPACES_KEYWORD,
+        self::FORCE_NO_GLOBAL_ALIAS_KEY,
     ];
 }

@@ -65,6 +65,11 @@ final class SymbolsConfigurationFactory
             $config,
             ConfigurationKeys::EXPOSE_GLOBAL_FUNCTIONS_KEYWORD,
         );
+        $forceNoGlobalAlias = self::retrieveExposeGlobalSymbol(
+            $config,
+            ConfigurationKeys::FORCE_NO_GLOBAL_ALIAS_KEY,
+            false,
+        );
 
         [$exposedClassNames, $exposedClassRegexes] = $this->retrieveElements(
             $config,
@@ -143,13 +148,14 @@ final class SymbolsConfigurationFactory
                     $includedNamespaceNames,
                     $includedNamespaceRegexes,
                 ),
+            $forceNoGlobalAlias,
         );
     }
 
-    private static function retrieveExposeGlobalSymbol(array $config, string $key): bool
+    private static function retrieveExposeGlobalSymbol(array $config, string $key, bool $default = true): bool
     {
         if (!array_key_exists($key, $config)) {
-            return true;
+            return $default;
         }
 
         $value = $config[$key];

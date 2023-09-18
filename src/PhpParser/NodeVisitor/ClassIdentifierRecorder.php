@@ -87,6 +87,7 @@ final class ClassIdentifierRecorder extends NodeVisitorAbstract
         // version (since it's an alias) but the declaration will now declare
         // a prefixed version (due to the namespace).
         return $this->enrichedReflector->belongsToGlobalNamespace($resolvedName)
-            && $this->enrichedReflector->isClassExcluded($resolvedName);
+            && $this->enrichedReflector->isClassExcluded($resolvedName)
+            && !$this->enrichedReflector->forceNoGlobalAlias();
     }
 }
