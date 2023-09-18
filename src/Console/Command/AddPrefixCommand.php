@@ -177,14 +177,6 @@ final class AddPrefixCommand implements Command, CommandAware
         }
 
         self::checkPathIsWriteable($outputDir);
-
-        $canDeleteFile = self::canDeleteOutputDir($io, $outputDir);
-
-        if (!$canDeleteFile) {
-            throw new RuntimeException('Cannot delete the output directory. Interrupting the process.');
-        }
-
-        $this->fileSystem->remove($outputDir);
     }
 
     private static function checkPathIsWriteable(string $path): void
