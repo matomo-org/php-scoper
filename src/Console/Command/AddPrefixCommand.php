@@ -56,6 +56,8 @@ final class AddPrefixCommand implements Command, CommandAware
 
     private const DEFAULT_OUTPUT_DIR = 'build';
 
+    private const IN_PLACE_OPT = 'in-place';
+
     private bool $init = false;
 
     public function __construct(
@@ -122,6 +124,12 @@ final class AddPrefixCommand implements Command, CommandAware
                     InputOption::VALUE_NONE,
                     'Do not look for a configuration file.',
                 ),
+                new InputOption(
+                    self::IN_PLACE_OPT,
+                    null,
+                    InputOption::VALUE_NONE,
+                    'Overwrite files in-place',
+                ),
             ],
         );
     }
@@ -143,7 +151,7 @@ final class AddPrefixCommand implements Command, CommandAware
             $this->getOutputDir($io, $config),
             $cwd,
         );
-        $this->checkOutputDir($io, $outputDir);
+        $this->checkOutputDir($io, $outputDir, $io->getOption(self::IN_PLACE_OPT)->asBoolean());
 
         $this->getScoper()->scope(
             $io,
@@ -170,13 +178,23 @@ final class AddPrefixCommand implements Command, CommandAware
         return $configuration->getOutputDir() ?? self::DEFAULT_OUTPUT_DIR;
     }
 
-    private function checkOutputDir(IO $io, string $outputDir): void
+    private function checkOutputDir(IO $io, string $outputDir, bool $isInPlace): void
     {
         if (!$this->fileSystem->exists($outputDir)) {
             return;
         }
 
         self::checkPathIsWriteable($outputDir);
+
+        if (!$isInPlace) {
+            $canDeleteFile = self::canDeleteOutputDir($io, $outputDir);
+
+            if (!$canDeleteFile) {
+                throw new RuntimeException('Cannot delete the output directory. Interrupting the process.');
+            }
+
+            $this->fileSystem->remove($outputDir);
+        }
     }
 
     private static function checkPathIsWriteable(string $path): void
