@@ -433,10 +433,7 @@ final class NameStmtPrefixer extends NodeVisitorAbstract
         }
 
         if ($this->enrichedReflector->isFunctionInternal($resolvedNameString)) {
-            return new FullyQualified(
-                $originalName->toString(),
-                $originalName->getAttributes(),
-            );
+            return $originalName;
         }
 
         if ($this->enrichedReflector->isExposedFunction($resolvedNameString)) {
